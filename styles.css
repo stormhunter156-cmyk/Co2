@@ -1,4 +1,23 @@
+/* Grünes, frisches Theme */
 :root {
+--bg: #07130d; /* sehr dunkles Grün */
+--fg: #e9fff3; /* fast weiß, mit grünlichem Stich */
+--card: #0e1f17; /* Kartenhintergrund */
+--muted: #0b1812; /* Flächen, Inputs */
+--border: #163526; /* Rahmen */
+--accent: #22c55e; /* Emerald 500 */
+--accent-600: #16a34a;/* Emerald 600 */
+--accent-700: #15803d;/* Emerald 700 */
+--shadow: rgba(0, 0, 0, .35);
+}
+
+
+* { box-sizing: border-box }
+html, body { height: 100% }
+body {
+margin: 0;
+font-family: system-ui, Segoe UI, Roboto, Arial;
+background: radial-gradient(1000px 600px at 10% -10%, #0f2a1e 0%, transparent 60%),
 radial-gradient(1000px 600px at 110% 10%, #0a2218 0%, transparent 60%),
 var(--bg);
 color: var(--fg);
@@ -75,20 +94,4 @@ border: 1px solid var(--border);
 
 
 .share { display: flex; gap: .5rem; margin-top: .6rem }
-
-
-#btn-install { background: linear-gradient(180deg, var(--accent), var(--accent-600)); border: 0; color: #03170a }
-
-
-.link { display: inline-flex; align-items: center; text-decoration: none; background: var(--muted) }
-
-
-/* Kleinere Verbesserungen */
-select { appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%23c6f6d5" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M5.516 7.548l4.484 4.482 4.484-4.482 1.416 1.416-5.9 5.9-5.9-5.9z"/></svg>'); background-repeat: no-repeat; background-position: right .6rem center; padding-right: 2rem }
-
-
-/* Responsive Tweaks */
-@media (max-width: 400px) {
-main { padding: .9rem }
-.card { padding: .85rem }
 }
