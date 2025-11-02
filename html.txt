@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CO₂ Rechner PWA</title>
+<link rel="manifest" href="/public/manifest.webmanifest">
+<link rel="icon" href="/public/favicon.ico">
+<meta name="theme-color" content="#0ea5e9" />
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<header>
+<h1>CO₂‑Rechner</h1>
+<button id="btn-install" hidden>App installieren</button>
+</header>
+
+
+<main>
+<section class="card">
+<h2>Berechnung</h2>
+<form id="form-co2">
+<label>Strecke (km)
+<input type="number" min="0" step="0.1" id="distance" required />
+</label>
+<label>Verkehrsmittel
+<select id="mode" required>
+<option value="car">Auto</option>
+<option value="bus">Bus</option>
+<option value="train">Bahn</option>
+<option value="plane">Flugzeug (Kurzstrecke)</option>
+</select>
+</label>
+<button type="submit">Berechnen</button>
+</form>
+<div id="result" class="result" aria-live="polite"></div>
+<div class="share">
+<button id="btn-share" disabled>Teilen</button>
+<a id="btn-wa" class="link" target="_blank" rel="noopener">WhatsApp</a>
+<a id="btn-mail" class="link">E‑Mail</a>
+</div>
+</section>
+
+
+<section class="card">
+<h2>Push‑Benachrichtigungen</h2>
+<p>Optional: Aktiviere Push, um Erinnerungen oder Tipps zu erhalten.</p>
+<button id="btn-push">Push aktivieren</button>
+<pre id="push-status"></pre>
+</section>
+</main>
+
+
+<footer>
+<small>Offline‑fähig • Datenschutz: Alle Berechnungen im Browser</small>
+</footer>
+
+
+<script src="/app.js" type="module"></script>
+<script src="/push.js" type="module"></script>
+</body>
+</html>
