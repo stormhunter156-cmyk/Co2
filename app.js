@@ -1,43 +1,50 @@
-// --- PWA Installation prompt handling ---
-let deferredPrompt;
-const installBtn = document.getElementById('btn-install');
-window.addEventListener('beforeinstallprompt', (e) => {
-e.preventDefault();
-deferredPrompt = e;
-installBtn.hidden = false;
-});
-installBtn?.addEventListener('click', async () => {
-installBtn.hidden = true;
-await deferredPrompt?.prompt();
-deferredPrompt = null;
-});
-
-
-// --- Service Worker Registration ---
-if ('serviceWorker' in navigator) {
-navigator.serviceWorker.register('/public/sw.js');
+nerCloseimport { initI18n, t, setLang, getLang, onLangChange } from './i18n.js';
+function buildShareURL(obj){
+const payload = { ...obj, v:1, lang:getLang(), ts:Date.now() };
+const r = b64urlEncode(JSON.stringify(payload));
+const url = new URL(location.href);
+url.searchParams.set('r', r);
+return url.toString();
+}
+function parseFromLocation(){
+try{
+const r = new URL(location.href).searchParams.get('r');
+if(!r) return null;
+return JSON.parse(b64urlDecode(r));
+}catch{ return null; }
 }
 
 
-// --- CO2 calculation ---
-const EF = {
-car: 171, // g CO2 / km (Durchschnitt, vereinfacht)
-bus: 104, // g CO2 / km
-train: 41, // g CO2 / km (Fernverkehr ca.)
-plane: 255, // g CO2 / km (Kurzstrecke, stark vereinfacht)
-};
+function updateShareLinks(){
+if(!last){ btnShare.disabled = true; return; }
+lastShareURL = buildShareURL(last);
+btnShare.disabled = false;
+btnWA.href = `https://wa.me/?text=${encodeURIComponent(t('share.prefix')+': '+formatLine(last)+'
+'+lastShareURL)}`;
+btnMail.href = `mailto:?subject=${encodeURIComponent(t('share.subject'))}&body=${encodeURIComponent(formatLine(last)+'
+'+lastShareURL)}`;
+}
 
 
-const form = document.getElementById('form-co2');
-const resultEl = document.getElementById('result');
-const btnShare = document.getElementById('btn-share');
-const btnWA = document.getElementById('btn-wa');
-const btnMail = document.getElementById('btn-mail');
+function formatLine(obj){
+return t('result.text', { km: Number(obj.km).toFixed(1), mode: t(`modes.${obj.mode}`), kg: Number(obj.kg).toFixed(2) });
+}
 
 
-let lastText = '';
+function renderCompare(friend){
+if(last){ youResult.textContent = formatLine(last); } else { youResult.textContent = '—'; }
+if(friend || currentFriend){ friendResult.textContent = formatLine(friend || currentFriend); }
+const me = last; const fr = friend || currentFriend;
+if(me && fr){
+const d = (me.kg - fr.kg);
+const sign = d===0 ? '' : (d>0 ? '+' : '');
+const pct = fr.kg ? (d / fr.kg * 100) : 0;
+compareOut.textContent = t('compare.delta', { diff: (sign + d.toFixed(2)), pct: pct.toFixed(1) });
+}
+}
 
 
+// On submit → calculate & update share links and comparison
 form.addEventListener('submit', (e) => {
 e.preventDefault();
 const km = parseFloat(document.getElementById('distance').value);
@@ -45,24 +52,48 @@ const mode = document.getElementById('mode').value;
 if (!Number.isFinite(km) || km <= 0) return;
 const grams = km * (EF[mode] ?? 0);
 const kg = grams / 1000;
-lastText = `Für ${km.toFixed(1)} km per ${mode} fallen ca. ${kg.toFixed(2)} kg CO₂ an.`;
-resultEl.textContent = lastText + ' (vereinfachte Schätzung)';
-btnShare.disabled = false;
-// Set share links
-btnWA.href = `https://wa.me/?text=${encodeURIComponent(lastText)}`;
-btnMail.href = `mailto:?subject=${encodeURIComponent('Mein CO₂‑Ergebnis')}&body=${encodeURIComponent(lastText)}`;
+last = { km, mode, kg };
+const txt = formatLine(last);
+resultEl.textContent = txt + ' ' + t('result.note');
+updateShareLinks();
+renderCompare();
 });
 
 
-// --- Web Share API (native share sheet) ---
+// Native share button → include link with encoded result
 btnShare.addEventListener('click', async () => {
 try {
+if (!last) return;
 if (navigator.share) {
-await navigator.share({ title: 'CO₂‑Ergebnis', text: lastText, url: location.href });
+await navigator.share({ title: t('share.subject'), text: formatLine(last), url: lastShareURL || buildShareURL(last) });
 } else {
-alert('Teilen wird von diesem Browser nicht nativ unterstützt. Nutze WhatsApp/E‑Mail.');
+alert(t('share.noNative'));
 }
-} catch (e) {
-console.warn('Share canceled/failed', e);
-}
+} catch (e) { console.warn('Share canceled/failed', e); }
 });
+
+
+// Load friend result from pasted URL
+btnLoadFriend?.addEventListener('click', () => {
+const val = friendUrlInput?.value?.trim();
+try{
+const data = val ? JSON.parse(b64urlDecode(new URL(val).searchParams.get('r'))) : null;
+if(!data) throw new Error();
+currentFriend = { km: Number(data.km), mode: data.mode, kg: Number(data.kg) };
+renderCompare(currentFriend);
+}catch{ alert(t('compare.invalid')); }
+});
+
+
+// If opened from a shared link → show banner & preload friend's result
+(function initFromQuery(){
+const data = parseFromLocation();
+if(!data) return;
+currentFriend = { km:Number(data.km), mode:data.mode, kg:Number(data.kg) };
+bannerText.textContent = t('compare.banner');
+banner.hidden = false;
+renderCompare(currentFriend);
+})();
+
+
+ban?.addEventListener('click', ()=>{ banner.hidden = true; });
