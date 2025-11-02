@@ -1,4 +1,23 @@
 <!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title data-i18n="app.title">CO₂ Rechner PWA</title>
+<link rel="manifest" href="/public/manifest.webmanifest">
+<link rel="icon" href="/public/favicon.ico">
+<meta name="theme-color" content="#22c55e" />
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<header>
+<h1 data-i18n="app.heading">CO₂‑Rechner</h1>
+<div style="display:flex;gap:.5rem;align-items:center">
+<label for="lang" style="font-size:.9rem"><span data-i18n="lang.label">Sprache</span>:</label>
+<select id="lang" aria-label="Language">
+<option value="de">Deutsch</option>
+<option value="en">English</option>
+<option value="es">Español</option>
 </select>
 <button id="btn-install" hidden data-i18n="install">App installieren</button>
 </div>
