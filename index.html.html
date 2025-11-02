@@ -1,62 +1,76 @@
 <!doctype html>
-<html lang="de">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CO₂ Rechner PWA</title>
-<link rel="manifest" href="/public/manifest.webmanifest">
-<link rel="icon" href="/public/favicon.ico">
-<meta name="theme-color" content="#0ea5e9" />
-<link rel="stylesheet" href="/styles.css" />
-</head>
-<body>
-<header>
-<h1>CO₂‑Rechner</h1>
-<button id="btn-install" hidden>App installieren</button>
+</select>
+<button id="btn-install" hidden data-i18n="install">App installieren</button>
+</div>
 </header>
+
+
+<!-- Hinweis-Banner, wenn ein geteilter Link erkannt wurde -->
+<div id="share-banner" class="banner" hidden role="status" aria-live="polite">
+<span id="share-banner-text" data-i18n="compare.banner"></span>
+<button id="share-banner-close" aria-label="Close">×</button>
+</div>
 
 
 <main>
 <section class="card">
-<h2>Berechnung</h2>
+<h2 data-i18n="calc.title">Berechnung</h2>
 <form id="form-co2">
-<label>Strecke (km)
-<input type="number" min="0" step="0.1" id="distance" required />
+<label>
+<span data-i18n="calc.distance">Strecke (km)</span>
+<input type="number" min="0" step="0.1" id="distance" required placeholder="0" />
 </label>
-<label>Verkehrsmittel
+<label>
+<span data-i18n="calc.mode">Verkehrsmittel</span>
 <select id="mode" required>
-<option value="car">Auto</option>
-<option value="bus">Bus</option>
-<option value="train">Bahn</option>
-<option value="plane">Flugzeug (Kurzstrecke)</option>
+<option value="car" data-i18n="modes.car">Auto</option>
+<option value="bus" data-i18n="modes.bus">Bus</option>
+<option value="train" data-i18n="modes.train">Bahn</option>
+<option value="plane" data-i18n="modes.plane">Flugzeug (Kurzstrecke)</option>
 </select>
 </label>
-<button type="submit">Berechnen</button>
+<button type="submit" data-i18n="calc.submit">Berechnen</button>
 </form>
 <div id="result" class="result" aria-live="polite"></div>
 <div class="share">
-<button id="btn-share" disabled>Teilen</button>
-<a id="btn-wa" class="link" target="_blank" rel="noopener">WhatsApp</a>
-<a id="btn-mail" class="link">E‑Mail</a>
+<button id="btn-share" disabled data-i18n="share.native">Teilen</button>
+<a id="btn-wa" class="link" target="_blank" rel="noopener" data-i18n="share.whatsapp">WhatsApp</a>
+<a id="btn-mail" class="link" data-i18n="share.email">E‑Mail</a>
 </div>
 </section>
 
 
 <section class="card">
-<h2>Push‑Benachrichtigungen</h2>
-<p>Optional: Aktiviere Push, um Erinnerungen oder Tipps zu erhalten.</p>
-<button id="btn-push">Push aktivieren</button>
+<h2 data-i18n="compare.title">Vergleich mit Freunden</h2>
+<p data-i18n="compare.desc">Teile deinen Link oder füge den Link eines Freundes ein, um zu vergleichen.</p>
+<div style="display:flex;gap:.5rem;flex-wrap:wrap">
+<input id="friend-url" class="link" style="flex:1;min-width:260px" placeholder="https://…" aria-label="Freundes-Link" />
+<button id="btn-load-friend" type="button" data-i18n="compare.load">Freundes‑Ergebnis laden</button>
+</div>
+<div id="compare" style="margin-top:.75rem;display:grid;gap:.6rem">
+<div class="result" id="you-box"><strong data-i18n="compare.you">Dein Ergebnis</strong><div id="you-result">—</div></div>
+<div class="result" id="friend-box"><strong data-i18n="compare.friend">Freundes‑Ergebnis</strong><div id="friend-result">—</div></div>
+<div class="result" id="diff-box"><strong data-i18n="compare.deltaTitle">Vergleich</strong><div id="compare-out">—</div></div>
+</div>
+</section>
+
+
+<section class="card">
+<h2 data-i18n="push.title">Push‑Benachrichtigungen</h2>
+<p data-i18n="push.desc">Optional: Aktiviere Push, um Erinnerungen oder Tipps zu erhalten.</p>
+<button id="btn-push" data-i18n="push.enable">Push aktivieren</button>
 <pre id="push-status"></pre>
 </section>
 </main>
 
 
 <footer>
-<small>Offline‑fähig • Datenschutz: Alle Berechnungen im Browser</small>
+<small data-i18n="footer.note">Offline‑fähig • Datenschutz: Alle Berechnungen im Browser</small>
 </footer>
 
 
-<script src="/app.js" type="module"></script>
-<script src="/push.js" type="module"></script>
+<script type="module" src="/i18n.js"></script>
+<script type="module" src="/app.js"></script>
+<script type="module" src="/push.js"></script>
 </body>
 </html>
