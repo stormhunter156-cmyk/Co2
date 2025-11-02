@@ -1,0 +1,21 @@
+{
+"app": {"title": "CO₂ Rechner PWA", "heading": "CO₂‑Rechner"},
+"lang": {"label": "Sprache"},
+"calc": {"title": "Berechnung", "distance": "Strecke (km)", "mode": "Verkehrsmittel", "submit": "Berechnen"},
+"modes": {"car": "Auto", "bus": "Bus", "train": "Bahn", "plane": "Flugzeug (Kurzstrecke)"},
+"result": {"text": "Für {km} km per {mode} fallen ca. {kg} kg CO₂ an.", "note": "(vereinfachte Schätzung)"},
+"share": {"native": "Teilen", "whatsapp": "WhatsApp", "email": "E‑Mail", "subject": "Mein CO₂‑Ergebnis", "noNative": "Teilen wird nicht unterstützt. Nutze WhatsApp/E‑Mail.", "prefix": "Mein CO₂‑Ergebnis"},
+"compare": {
+"title": "Vergleich mit Freunden",
+"desc": "Teile deinen Link oder füge den Link eines Freundes ein, um zu vergleichen.",
+"load": "Freundes‑Ergebnis laden",
+"you": "Dein Ergebnis",
+"friend": "Freundes‑Ergebnis",
+"deltaTitle": "Vergleich",
+"delta": "Differenz: {diff} kg CO₂ ({pct}%)",
+"invalid": "Ungültiger Link. Bitte füge einen Link ein, der in dieser App erzeugt wurde."
+},
+"push": {"title": "Push‑Benachrichtigungen", "desc": "Optional: Aktiviere Push, um Erinnerungen oder Tipps zu erhalten.", "enable": "Push aktivieren"},
+"footer": {"note": "Offline‑fähig • Datenschutz: Alle Berechnungen im Browser"},
+"install": "App installieren"
+}

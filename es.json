@@ -1,0 +1,21 @@
+{
+"app": {"title": "PWA Calculadora de CO₂", "heading": "Calculadora de CO₂"},
+"lang": {"label": "Idioma"},
+"calc": {"title": "Cálculo", "distance": "Distancia (km)", "mode": "Medio de transporte", "submit": "Calcular"},
+"modes": {"car": "Coche", "bus": "Autobús", "train": "Tren", "plane": "Avión (corta distancia)"},
+"result": {"text": "Para {km} km en {mode} se producen aprox. {kg} kg de CO₂.", "note": "(estimación simplificada)"},
+"share": {"native": "Compartir", "whatsapp": "WhatsApp", "email": "Correo", "subject": "Mi resultado de CO₂", "noNative": "Compartir no está soportado. Usa WhatsApp/Correo.", "prefix": "Mi resultado de CO₂"},
+"compare": {
+"title": "Comparar con amigos",
+"desc": "Comparte tu enlace o pega el enlace de un amigo para comparar.",
+"load": "Cargar resultado de amigo",
+"you": "Tu resultado",
+"friend": "Resultado del amigo",
+"deltaTitle": "Comparación",
+"delta": "Diferencia: {diff} kg de CO₂ ({pct}%)",
+"invalid": "Enlace inválido. Pega un enlace generado por esta app."
+},
+"push": {"title": "Notificaciones push", "desc": "Opcional: activa push para recordatorios o consejos.", "enable": "Activar push"},
+"footer": {"note": "Funciona sin conexión • Privacidad: todos los cálculos en tu navegador"},
+"install": "Instalar app"
+}
