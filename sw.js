@@ -1,4 +1,4 @@
-const CACHE_NAME = 'co2-pwa-v1';
+const CACHE_NAME = 'co2-pwa-v4';
 const ASSETS = [
 '/',
 '/index.html',
@@ -22,3 +22,4 @@ e.respondWith(
 caches.match(e.request).then((cached) => cached || fetch(e.request))
 );
 });
+
